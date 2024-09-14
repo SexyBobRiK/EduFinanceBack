@@ -53,7 +53,7 @@ class AuthController {
             
 
             if (result.rows.length === 0) {
-                return res.status(404).json({ message: 'User not found' });
+                return res.status(200).json({ message: 'User not found' });
             }
             
 
@@ -63,7 +63,7 @@ class AuthController {
             const isPasswordValid = await bcrypt.compare(password, user.usr_password);
             
             if (!isPasswordValid) {
-                return res.status(401).json({ message: 'Invalid credentials' });
+                return res.status(200).json({ message: 'Password invalid' });
             }
             
             // Если пароли верны, генерируем и отправляем токен
