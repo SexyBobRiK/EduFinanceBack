@@ -1,20 +1,31 @@
-const jwt = require("jsonwebtoken")
-const {secret} = require("../middleware/config")
+const jwt = require("jsonwebtoken");
+const { secret } = require("../middleware/config");
 
 module.exports = function (req, res, next) {
 	if (req.method === "OPTIONS") {
-		next()
+		next();
+		return; // Добавлен return, чтобы предотвратить дальнейшее выполнение кода
 	}
+
 	try {
-		const token = req.headers.authorization.split(" ")[1]
-		if(!token) {
-			return res.status(403).json({message: "Пользователь не авторизован"})
+		// Проверка наличия заголовка Authorization
+		const authHeader = req.headers.authorization;
+		if (!authHeader) {
+			return res.status(403).json({ message: "Пользователь не авторизован" });
 		}
-		const decodedData = jwt.verify(token, secret)
-		req.user = decodedData
-		next()
+
+		// Разбиение заголовка на части и получение токена
+		const token = authHeader.split(" ")[1];
+		if (!token) {
+			return res.status(403).json({ message: "Пользователь не авторизован" });
+		}
+
+		// Проверка и декодирование токена
+		const decodedData = jwt.verify(token, secret);
+		req.user = decodedData;
+		next();
 	} catch (e) {
 		console.log(e);
-		return res.status(403).json({message: "Пользователь не авторизован"})
+		return res.status(403).json({ message: "Пользователь не авторизован" });
 	}
-}
+};

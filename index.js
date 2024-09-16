@@ -6,6 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use('/api/auth', require('./routes/authRouter'));
+app.use('/api/causes', require('./routes/causeRouter'));
 
 const startServer = async () => { 
     try {
