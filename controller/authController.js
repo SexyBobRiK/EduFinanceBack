@@ -10,7 +10,7 @@ const generateToken = (id) => {
 
 class AuthController {
     async register(req, res) {
-        console.log(req.body);
+
         
         const { name, lastName, email, password, age } = req.body;
 
