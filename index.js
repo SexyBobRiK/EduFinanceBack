@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(cors());
 app.use('/api/auth', require('./routes/authRouter'));
 app.use('/api/causes', require('./routes/causeRouter'));
-
+app.use('/api/managements', require('./routes/managementRouter'));
 const startServer = async () => { 
     try {
        await connectDatabase();
