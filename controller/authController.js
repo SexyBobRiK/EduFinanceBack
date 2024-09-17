@@ -5,7 +5,7 @@ const connectDatabase = require('../DB/connectDb');
 
 const generateToken = (id) => {
     const payload = { id };
-    return jwt.sign(payload, secret, { expiresIn: '1h' });
+    return jwt.sign(payload, secret, { expiresIn: '24h' });
 }
 
 class AuthController {
