@@ -6,6 +6,7 @@ const router = Router();
 
 
 router.post('/insert-managements', middleware, controller.insertManagement);
+router.get('/get-managements', middleware, controller.getManagement);
 
 
 module.exports = router;

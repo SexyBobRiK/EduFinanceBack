@@ -79,6 +79,30 @@ class AuthController {
             res.status(500).json({ message: 'Internal Server Error' });
         }
     }
+
+    async getUsers(req, res) {
+        const token = req.headers['authorization']?.split(' ')[1];
+        
+        if (!token) {
+            return res.status(401).json({ error: 'No token provided' });
+        }
+
+        try {
+            const decodedData = jwt.verify(token, secret);
+            const userId = decodedData.id;
+
+            const client = await connectDatabase();
+            const user = await client.query(
+                'SELECT usr_name, usr_lastname, usr_email FROM public.db_user WHERE usr_id = $1',
+                [userId]
+            );
+
+            res.json(user.rows);
+            
+        } catch (error) {
+            res.status(500).json({ error: 'Internal server error' });
+        }
+}
 }
 
 module.exports = new AuthController();
